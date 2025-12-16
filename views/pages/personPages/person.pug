@@ -1,0 +1,58 @@
+extends ../../layout/default.pug
+include  ../../mixins/search.pug
+include  ../../mixins/filter-status.pug
+block main
+  .container
+    .card.custom-card
+      .card-header
+        h3 Danh sách nhân khẩu
+      .card-body
+        .controls.mb-3
+          .left
+            a.btn-new(href='/person/add') + TẠO NHÂN KHẨU MỚI
+            +filter-status(filterStatus)
+          .right
+            +search(keyword)
+        table.table-custom
+          thead
+            tr
+              th #
+              th Họ và tên
+              th Số CMND/CCCD
+              th Giới tính  
+              th Ngày sinh
+              th Trạng thái
+              th Hành động
+          tbody
+            each val, index in persons
+              tr
+                td #{index+1}
+                td #{val.fullName}
+                td #{val.cccd}
+                td #{val.genderLabel}
+                td= val.dateOfBirth ? val.dateOfBirth.toLocaleDateString("vi-VN") : ""
+                td
+                  - var cls = val.status=='Thường trú' ? 'status-approved' : (val.status=='Tạm trú' ? 'status-blocked' : 'status-rejected')
+                  span.status-dot(class=cls)
+                  | #{val.status}
+                td
+                  a(href='/person/' + val.cccd, title='Xem') 🔍
+                  a.ml-2(href=`/person/edit/${val.cccd}`, title='Sửa') ✏️
+                  form.delete-form(method="POST", action=`/person/delete/${val.cccd}`)
+                    button.delete-button(type="submit" title='Xóa') 🗑️
+        .d-flex.align-items-center.justify-content-between.mt-3
+          .pagination-area
+            .paginator
+              a.page(href='#') ◀
+              a.page.active(href='#') 1
+              a.page(href='#') 2
+              a.page(href='#') 3
+              a.page(href='#') ▶
+          .per-page
+            | Hiển thị
+            select
+              option 10
+              option 25
+              option 50
+              option 100
+            | /trang

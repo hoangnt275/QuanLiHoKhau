@@ -1,0 +1,49 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Chỉnh sửa nhân khẩu 
+    form(method='POST' action=`/person/edit/${person.cccd}`)
+      .form-group
+        label(for='fullName') Họ và tên:
+        input#fullName.form-control(type='text' name='fullName' value=person.fullName required) 
+
+      .form-group
+        label(for='cccd') CCCD:
+        input#cccd.form-control(type='text' name='cccd' value=person.cccd required)
+
+      .form-group
+        label(for='gender') Giới tính:
+        select#gender.form-control(name='gender' value=person.gender required)
+          option(value='nam') Nam
+          option(value='nu') Nữ
+          option(value='khac') Khác
+
+      .form-group
+        label(for='dateOfBirth') Ngày sinh:
+        input#dateOfBirth.form-control(type='date' name='dateOfBirth' value=person.dateOfBirthFormatted required)
+
+      .form-group
+        label(for='job') Nghề nghiệp:
+        input#job.form-control(type='text' name='job' value=person.job required)
+      
+      .form-group
+        label(for='relation') Quan hệ với chủ hộ:
+        select#relation.form-control(name='relation' value=person.relation required)
+          option(value="chu_ho") Chủ hộ
+          option(value='vo') Vợ
+          option(value='chong') Chồng
+          option(value='con') Con
+          option(value='khac') Khác
+      .form-group
+        label(for='familyCode') Mã hộ:
+        input#family.form-control(type='text' name='familyCode' value=person.familyCode.code required)
+      .form-group
+        label(for='statusPerson') Trạng thái:
+        select#status.form-control(name='statusPerson' value=person.statusPerson required)
+          option(value='Thường trú') Thường trú
+          option(value='Tạm trú') Tạm trú
+          option(value='Tạm vắng') Tạm vắng
+
+      button.btn.btn-primary.mt-4(type='submit') Chỉnh sửa nhân khẩu
+    a.btn.btn-secondary.p-3.btn-sm(href='/person') Quay lại danh sách

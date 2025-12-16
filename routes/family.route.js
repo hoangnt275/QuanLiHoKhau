@@ -1,0 +1,11 @@
+const express = require("express");
+const router = express.Router();
+const controller = require("../controllers/family.controller");
+router.get("/", controller.family);
+router.get("/add", controller.addFamily);
+router.post("/add", controller.postAddFamily);
+router.get("/:code", controller.detailFamily);
+router.get("/edit/:code", controller.editFamily);
+router.post("/edit/:code", controller.postEditFamily);
+router.post("/delete/:code", controller.deleteFamily);
+module.exports = router;

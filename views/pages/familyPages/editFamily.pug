@@ -1,0 +1,36 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Chỉnh sửa hộ gia đình 
+    form(method='POST' action=`/family/edit/${family.code}`)
+      .form-group
+        label(for='code') Mã hộ:
+        input#code.form-control(type='text' name='code' value=family.code required)
+
+      
+      .form-group
+        label(for="head") Chủ hộ:
+        select#head.form-control(name="head" required)
+          each member in family.members
+            option(
+              value=member._id
+              selected=String(family.head._id) === String(member._id)
+            ) #{member.fullName} - #{member.cccd}
+      .form-group
+        label(for='address') Địa chỉ:
+        input#addr.form-control(type='text' name='address' value=family.address  required)
+
+      .form-group
+        label(for='members') Số thành viên:
+        input#members.form-control(type='number' name='members' value=family.members.length  readonly)
+
+      .form-group
+        label(for='status') Trạng thái:
+        select#status.form-control(name='status'  required)
+          option(value='Đang quản lý' selected=String(family.status) === 'Đang quản lý') Đang quản lý
+          option(value='Tạm khóa' selected=String(family.status) === 'Tạm khóa') Tạm khóa
+          option(value='Đã hủy' selected=String(family.status) === 'Đã hủy') Đã hủy
+
+      button.btn.btn-primary.mt-4(type='submit') Chỉnh sửa hộ khẩu
+    a.btn.btn-secondary.mt-3(href='/family') Quay lại danh sách

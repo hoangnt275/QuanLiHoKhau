@@ -1,0 +1,48 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Thêm nhân khẩu mới
+    form(method='POST' action='/person/add')
+      .form-group
+        label(for='fullName') Họ và tên:
+        input#fullName.form-control(type='text' name='fullName' required) 
+
+      .form-group
+        label(for='cccd') CCCD:
+        input#cccd.form-control(type='text' name='cccd' required)
+
+      .form-group
+        label(for='gender') Giới tính:
+        select#gender.form-control(name='gender' required)
+          option(value='nam') Nam
+          option(value='nu') Nữ
+          option(value='khac') Khác
+
+      .form-group
+        label(for='dateOfBirth') Ngày sinh:
+        input#dateOfBirth.form-control(type='date' name='dateOfBirth' required)
+
+      .form-group
+        label(for='job') Nghề nghiệp:
+        input#job.form-control(type='text' name='job' required)
+      
+      .form-group
+        label(for='relation') Quan hệ với chủ hộ:
+        select#relation.form-control(name='relation' required)
+          option(value="chu_ho") Chủ hộ
+          option(value='vo') Vợ
+          option(value='chong') Chồng
+          option(value='con') Con
+          option(value='khac') Khác
+      .form-group
+        label(for='familyCode') Mã hộ:
+        input#family.form-control(type='text' name='familyCode' required)
+      .form-group
+        label(for='statusPerson') Trạng thái:
+        select#status.form-control(name='statusPerson' required)
+          option(value='Thường trú') Thường trú
+          option(value='Tạm trú') Tạm trú
+          option(value='Tạm vắng') Tạm vắng
+
+      button.btn.btn-primary(type='submit') Thêm nhân khẩu

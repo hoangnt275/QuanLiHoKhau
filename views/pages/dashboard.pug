@@ -1,0 +1,11 @@
+extends ../layout/default.pug
+block main
+  .container
+    h1 HỆ THỐNG QUẢN LÍ HỘ KHẤU
+    .stats-row
+      .stat-card
+        .label Số lượng hộ khẩu
+        .value #{typeof householdsCount !== 'undefined' ? householdsCount : 0}
+      .stat-card
+        .label Số lượng nhân khẩu
+        .value #{typeof populationCount !== 'undefined' ? populationCount : 0}

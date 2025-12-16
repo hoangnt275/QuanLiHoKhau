@@ -1,0 +1,29 @@
+extends ../../layout/default.pug
+block main
+  .container
+    .card.custom-card
+      .card-header
+        h3 Chi tiết hộ khẩu
+      .card-body
+        ul.list-unstyled
+          li
+            strong Mã hộ: 
+            | #{family.code} 
+          li
+            strong Chủ hộ:
+            | #{family.head.fullName}
+          li
+            strong Địa chỉ: 
+            | #{family.address}
+          li
+            strong Trạng thái: 
+            | #{family.status} 
+          li  
+            strong Số thành viên: 
+            | #{family.members.length}
+          li
+            strong Các thành viên trong hộ:
+            ul
+              each member in family.members
+                li #{member.fullName} - #{member.relationLabel} - #{member.cccd}
+          a.btn.btn-secondary.mt-3(href='/family') Quay lại danh sách

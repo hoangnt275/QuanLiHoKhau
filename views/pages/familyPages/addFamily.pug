@@ -1,0 +1,56 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Thêm hộ gia đình mới
+    form(method='POST' action='/family/add')
+      .form-group
+        label(for='code') Mã hộ:
+        input#code.form-control(type='text' name='code' required)
+
+      .form-group
+        label(for='address') Địa chỉ:
+        input#addr.form-control(type='text' name='address' required)
+
+      .form-group
+        label(for='members') Số thành viên:
+        input#members.form-control(type='number' name='members' value=1 readonly )
+
+      .form-group
+        label(for='status') Trạng thái:
+        select#status.form-control(name='status' required)
+          option(value='Đang quản lý') Đang quản lý
+          option(value='Tạm khóa') Tạm khóa
+          option(value='Đã chuyển đi') Đã chuyển đi
+
+      .form-group
+        label(for='fullName') Họ và tên chủ hộ:
+        input#fullName.form-control(type='text' name='fullName' required) 
+
+      .form-group
+        label(for='cccd') CCCD chủ hộ:
+        input#cccd.form-control(type='text' name='cccd' required)
+
+      .form-group
+        label(for='gender') Giới tính chủ hộ:
+        select#gender.form-control(name='gender' required)
+          option(value='nam') Nam
+          option(value='nu') Nữ
+          option(value='khac') Khác
+
+      .form-group
+        label(for='dateOfBirth') Ngày sinh chủ hộ:
+        input#dateOfBirth.form-control(type='date' name='dateOfBirth' required)
+
+      .form-group
+        label(for='job') Nghề nghiệp chủ hộ:
+        input#job.form-control(type='text' name='job' required)
+
+      .form-group
+        label(for='statusPerson') Trạng thái:
+        select#status.form-control(name='statusPerson' required)
+          option(value='Thường trú') Thường trú
+          option(value='Tạm trú') Tạm trú
+          option(value='Tạm vắng') Tạm vắng
+
+      button.btn.btn-primary(type='submit') Thêm hộ gia đình

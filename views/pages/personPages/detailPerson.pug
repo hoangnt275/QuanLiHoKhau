@@ -1,0 +1,39 @@
+extends ../../layout/default.pug
+block main
+  .container
+    .card.custom-card
+      .card-header
+        h3 Chi tiết nhân khẩu
+      .card-body
+        ul.list-unstyled
+          li
+            strong Họ và tên: 
+            | #{person.fullName}
+          li
+            strong Số CMND/CCCD: 
+            | #{person.cccd}
+          li
+            strong Giới tính: 
+            |  #{person.genderLabel}
+          li
+            strong Ngày sinh: 
+            | #{person.dateOfBirth ? person.dateOfBirth.toLocaleDateString("vi-VN") : ""}
+          li
+            strong Nghề nghiệp: 
+            | #{person.job} 
+          li
+            strong Quan hệ với chủ hộ: 
+            | #{person.relationLabel}
+          li
+            strong Mã hộ: 
+            | #{person.familyCode ? person.familyCode.code : 'Chưa có thông tin'}
+          li
+            strong Chủ hộ:
+            | #{person.familyCode ? person.familyCode.headName : 'Chưa có thông tin'}
+          li
+            strong Địa chỉ hộ: 
+            | #{person.familyCode ? person.familyCode.address : 'Chưa có thông tin'}
+          li
+            strong Trạng thái: 
+            | #{person.status}  
+          a.btn.btn-secondary.mt-3(href='/person') Quay lại danh sách
