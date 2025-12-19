@@ -3,6 +3,7 @@ extends ../../layout/default.pug
 block main
   .container
     h1 Chỉnh sửa nhân khẩu 
+    a.btn.btn-primary.mt-3.mb-3(href='/person') Quay lại danh sách
     form(method='POST' action=`/person/edit/${person.cccd}`)
       .form-group
         label(for='fullName') Họ và tên:
@@ -15,9 +16,9 @@ block main
       .form-group
         label(for='gender') Giới tính:
         select#gender.form-control(name='gender' value=person.gender required)
-          option(value='nam') Nam
-          option(value='nu') Nữ
-          option(value='khac') Khác
+          option(value='nam' selected=(person.gender === 'nam')) Nam
+          option(value='nu' selected=(person.gender === 'nu')) Nữ
+          option(value='khac' selected=(person.gender === 'khac')) Khác
 
       .form-group
         label(for='dateOfBirth') Ngày sinh:
@@ -30,20 +31,25 @@ block main
       .form-group
         label(for='relation') Quan hệ với chủ hộ:
         select#relation.form-control(name='relation' value=person.relation required)
-          option(value="chu_ho") Chủ hộ
-          option(value='vo') Vợ
-          option(value='chong') Chồng
-          option(value='con') Con
-          option(value='khac') Khác
+          option(value="chu_ho" selected=(person.relation === 'chu_ho')) Chủ hộ
+          option(value='vo' selected=(person.relation === 'vo')) Vợ
+          option(value='chong' selected=(person.relation === 'chong')) Chồng
+          option(value='con' selected=(person.relation === 'con')) Con
+          option(value='khac' selected=(person.relation === 'khac')) Khác
       .form-group
-        label(for='familyCode') Mã hộ:
-        input#family.form-control(type='text' name='familyCode' value=person.familyCode.code required)
+        label(for="familyCode") Mã hộ:
+        select#family.form-control(name="familyCode" required)
+          each family in families
+            option(
+              value=family._id
+              selected=String(person.familyCode._id) === String(family._id)
+            ) #{family.code}
       .form-group
-        label(for='statusPerson') Trạng thái:
-        select#status.form-control(name='statusPerson' value=person.statusPerson required)
-          option(value='Thường trú') Thường trú
-          option(value='Tạm trú') Tạm trú
-          option(value='Tạm vắng') Tạm vắng
+        label(for='status') Trạng thái:
+        select#status.form-control(name='status' value=person.statusPerson required)
+          option(value='Thường trú' selected=(person.status === 'Thường trú')) Thường trú
+          option(value='Tạm trú' selected=(person.status === 'Tạm trú')) Tạm trú
+          option(value='Tạm vắng' selected=(person.status === 'Tạm vắng')) Tạm vắng
 
       button.btn.btn-primary.mt-4(type='submit') Chỉnh sửa nhân khẩu
-    a.btn.btn-secondary.p-3.btn-sm(href='/person') Quay lại danh sách
+    

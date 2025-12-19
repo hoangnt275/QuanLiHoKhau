@@ -5,25 +5,29 @@ block main
       .card-header
         h3 Chi tiết hộ khẩu
       .card-body
-        ul.list-unstyled
-          li
-            strong Mã hộ: 
-            | #{family.code} 
-          li
+        .details-grid
+          .detail-item
+            strong Mã hộ:
+            br
+            | #{family.code}
+          .detail-item
             strong Chủ hộ:
+            br
             | #{family.head.fullName}
-          li
-            strong Địa chỉ: 
+          .detail-item
+            strong Địa chỉ:
+            br
             | #{family.address}
-          li
-            strong Trạng thái: 
-            | #{family.status} 
-          li  
-            strong Số thành viên: 
-            | #{family.members.length}
-          li
+          .detail-item
+            strong Trạng thái:
+            br
+            | #{family.status}
+          .detail-item
+            strong Số thành viên:
+            .member-count #{family.members.length}
+          .detail-item.members
             strong Các thành viên trong hộ:
-            ul
+            ul.members-list
               each member in family.members
-                li #{member.fullName} - #{member.relationLabel} - #{member.cccd}
-          a.btn.btn-secondary.mt-3(href='/family') Quay lại danh sách
+                li.member-chip #{member.fullName} - #{member.relationLabel} - #{member.cccd}
+        a.btn.btn-primary.mt-3.mb-3(href='/family') Quay lại danh sách

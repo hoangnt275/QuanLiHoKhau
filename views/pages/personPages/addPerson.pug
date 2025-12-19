@@ -3,6 +3,7 @@ extends ../../layout/default.pug
 block main
   .container
     h1 Thêm nhân khẩu mới
+    a.btn.btn-primary.mt-3.mb-3(href='/person') Quay lại danh sách
     form(method='POST' action='/person/add')
       .form-group
         label(for='fullName') Họ và tên:
@@ -39,10 +40,10 @@ block main
         label(for='familyCode') Mã hộ:
         input#family.form-control(type='text' name='familyCode' required)
       .form-group
-        label(for='statusPerson') Trạng thái:
-        select#status.form-control(name='statusPerson' required)
-          option(value='Thường trú') Thường trú
-          option(value='Tạm trú') Tạm trú
-          option(value='Tạm vắng') Tạm vắng
+        label(for='status') Trạng thái:
+        select#status.form-control(name='status' required)
+          option(value='Thường trú') Thường trú
+          option(value='Tạm trú') Tạm trú
+          option(value='Tạm vắng') Tạm vắng
 
       button.btn.btn-primary(type='submit') Thêm nhân khẩu

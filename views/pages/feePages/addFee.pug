@@ -1,0 +1,31 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Thêm khoản phí mới
+    form(method='POST' action='/fee/add')
+      .form-group
+        label(for='codeFee') Mã khoản phí:
+        input#codeFee.form-control(type='text' name='codeFee' required) 
+
+      .form-group
+        label(for='name') Tên khoản phí:
+        input#name.form-control(type='text' name='name' required)
+      .form-group
+        label(for='value') Số tiền:
+        input#value.form-control(type='number' name='value' required)
+      .form-group
+        label(for='cycle') Chu kỳ:
+        input#cycle.form-control(type='text' name='cycle' required)
+      .form-group
+        label(for='type') Loại phí:
+        select#gender.form-control(name='type' required)
+          option(value='Bắt buộc') Bắt buộc
+          option(value='Tự nguyện') Tự nguyện
+      .form-group
+        label(for='status') Trạng thái:
+        select#status.form-control(name='status' required)
+          option(value='Hoàn thành') Hoàn thành
+          option(value='Đang thu') Đang thu
+          option(value='Đã hủy') Đã hủy
+      button.btn.btn-primary(type='submit') Thêm khoản phí

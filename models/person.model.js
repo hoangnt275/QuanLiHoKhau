@@ -36,8 +36,8 @@ const PersonSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ["Thường trú", "Tạm trú", "Tạm vắng"],
-        default: "Thường trú",
+        enum: ["Thường trú", "Tạm trú", "Tạm vắng"],
+        default: "Thường trú",
     },
     displayStatus: {
         type: Boolean,

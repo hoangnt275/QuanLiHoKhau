@@ -19,8 +19,6 @@ module.exports.person = async (req, res) => {
         if (req.query.status && req.query.status !== "") {
             filter.status = req.query.status;
         }
-        console.log("Query:", req.query);
-        console.log("Filter:", JSON.stringify(filter, null, 2));
         const persons = await Person.find(filter).populate("familyCode").lean();
         persons.forEach((person) => {
             person.genderLabel = GENDER_LABEL[person.gender] || "";
@@ -53,7 +51,7 @@ module.exports.postAddPerson = async (req, res) => {
             job,
             relation,
             familyCode,
-            statusPerson,
+            status,
         } = req.body;
         const family = await Family.findOne({ code: familyCode.trim() });
         if (!family) {
@@ -76,7 +74,7 @@ module.exports.postAddPerson = async (req, res) => {
             job: job?.trim(),
             relation,
             familyCode: family._id,
-            status: statusPerson,
+            status,
         });
         family.members.push(person._id);
         await family.save();
@@ -99,7 +97,13 @@ module.exports.detailPerson = async (req, res) => {
     try {
         const cccd = req.params.cccd;
         const person = await Person.findOne({ cccd: cccd })
-            .populate("familyCode")
+            .populate({
+                path: "familyCode",
+                populate: {
+                    path: "head",
+                    select: "fullName cccd",
+                },
+            })
             .lean();
         if (!person) {
             return res
@@ -125,6 +129,7 @@ module.exports.editPerson = async (req, res) => {
         const person = await Person.findOne({ cccd: cccd }).populate(
             "familyCode"
         );
+        const families = await Family.find();
         if (person.dateOfBirth) {
             const d = new Date(person.dateOfBirth);
             person.dateOfBirthFormatted = d.toISOString().split("T")[0];
@@ -136,6 +141,7 @@ module.exports.editPerson = async (req, res) => {
         }
         res.render("pages/personPages/editPerson", {
             person: person,
+            families,
             pageTitle: "Chỉnh sửa nhân khẩu",
         });
     } catch (error) {
@@ -155,19 +161,46 @@ module.exports.postEditPerson = async (req, res) => {
             job,
             relation,
             familyCode,
-            statusPerson,
+            status,
         } = req.body;
         const person = await Person.findOne({ cccd: oldcccd });
+        console.log(familyCode);
         if (!person) {
             return res
                 .status(404)
                 .send("Không tìm thấy nhân khẩu với CCCD: " + oldcccd);
         }
-        const family = await Family.findOne({ code: familyCode.trim() });
+        if (person.relation === "chu_ho" && person.relation !== relation) {
+            return res.status(400).send("Cần ít nhất 1 chủ hộ");
+        }
+        const family = await Family.findOne({ _id: familyCode.trim() });
         if (!family) {
             return res
                 .status(400)
-                .send("Không tìm thấy hộ khẩu với mã: " + familyCode);
+                .send(
+                    "Không tìm thấy hộ khẩu với mã hộ gia đình: " + familyCode
+                );
+        }
+        if (familyCode !== String(person.familyCode._id)) {
+            if (person.relation === "chu_ho") {
+                return res.status(400).send("Chủ hộ không được thay đổi hộ");
+            }
+            const oldFamily = await Family.findOne({ _id: person.familyCode });
+            if (!oldFamily) {
+                return res
+                    .status(400)
+                    .send(
+                        "Không tìm thấy hộ khẩu với mã: " + person.familyCode
+                    );
+            }
+            await Family.updateOne(
+                { _id: family._id },
+                { $addToSet: { members: person._id } }
+            );
+            await Family.updateOne(
+                { _id: oldFamily._id },
+                { $pull: { members: person._id } }
+            );
         }
 
         // Cập nhật thông tin
@@ -178,7 +211,7 @@ module.exports.postEditPerson = async (req, res) => {
         person.job = job?.trim();
         person.relation = relation;
         person.familyCode = family._id;
-        person.status = statusPerson;
+        person.status = status;
         await person.save();
         // cập nhật xong quay về danh sách
         return res.redirect("/person");
@@ -212,4 +245,19 @@ module.exports.deletePerson = async (req, res) => {
         console.error(error);
         res.status(500).send("Lỗi server");
     }
+};
+// [GET] /person/api/payer/by-cccd/:cccd
+module.exports.getPersonByCCCD = async (req, res) => {
+    const cccd = req.params.cccd;
+    const payer = await Person.findOne({ cccd }).populate("familyCode");
+    if (!payer) {
+        return res
+            .status(400)
+            .json({ message: "không tìm thấy người đóng phí phù hợp" });
+    }
+    const family = payer.familyCode.code;
+    return res.json({
+        payer,
+        family,
+    });
 };

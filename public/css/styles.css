@@ -14,6 +14,17 @@ body {
     margin: 0;
     background: #f6f8fa;
     color: #111;
+    /* Slightly larger base font for better readability */
+    font-size: 16.5px;
+    line-height: 1.5;
+}
+
+/* Normalize bold text appearance across the app */
+strong,
+b {
+    font-weight: 700;
+    font-size: 1rem; /* consistent size for bold inline text */
+    color: inherit;
 }
 html,
 body {
@@ -131,10 +142,68 @@ header .brand-name {
 .sidenav a:hover {
     background: rgba(255, 255, 255, 0.03);
 }
-.sidenav .icon {
-    width: 28px;
-    text-align: center;
+
+/* Active / selected sidebar item */
+.sidenav a.active {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    position: relative;
 }
+.sidenav a.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 4px;
+    background: var(--accent);
+    border-radius: 4px;
+}
+.sidenav a.active .label {
+    font-weight: 700;
+}
+.sidenav a.active .icon svg {
+    color: var(--accent);
+}
+.sidenav .icon {
+    width: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.sidenav .icon svg {
+    width: 18px;
+    height: 18px;
+    color: inherit;
+    display: block;
+}
+
+/* Selected / toggled button appearance (for filters and selectable buttons) */
+.btn.selected,
+.btn.selected:focus,
+.btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.12);
+    transform: translateY(-2px);
+}
+.btn.selected {
+    transition: transform 150ms ease, box-shadow 150ms ease,
+        background-color 150ms ease;
+}
+/* Subtle press effect for native click */
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Small modifier to indicate 'chip' style selected (for members/families chips) */
+.member-chip.selected {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.08);
+}
+
 .sider-footer {
     position: absolute;
     bottom: 18px;
@@ -301,6 +370,37 @@ header .brand-name {
     table-layout: auto;
     min-width: 0;
 }
+
+/* Vertical scroll area for long tables */
+.table-scroll {
+    max-height: 420px; /* adjust as needed */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 6px; /* avoid content hidden by scrollbar */
+}
+.table-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+}
+.table-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+.table-scroll::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+}
+.table-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Keep table headers visible when scrolling */
+.table-scroll thead th {
+    position: sticky;
+    top: 0;
+    background: #fff; /* match card background */
+    z-index: 2;
+    border-bottom: 1px solid #eef2f6;
+}
 .table-custom th,
 .table-custom td {
     max-width: 260px;
@@ -313,6 +413,61 @@ header .brand-name {
 /* Prevent card content from overflowing */
 .card.custom-card {
     overflow: hidden;
+}
+
+/* Family details grid (two items per row on wide screens) */
+.details-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.detail-item {
+    flex: 1 1 calc(50% - 12px);
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(17, 24, 39, 0.04);
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+/* .detail-item strong {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+} */
+.detail-item .member-count {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 6px;
+}
+.detail-item.members {
+    min-height: 74px;
+}
+.members-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 8px 0 0 0;
+    list-style: none;
+}
+.member-chip {
+    background: #f1f5f9;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    color: #111;
+}
+@media (max-width: 600px) {
+    .detail-item {
+        flex: 1 1 100%;
+    }
+    .members-list {
+        gap: 6px;
+    }
 }
 
 @media (max-width: 900px) {

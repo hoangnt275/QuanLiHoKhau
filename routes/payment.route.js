@@ -1,0 +1,11 @@
+const express = require("express");
+const router = express.Router();
+const controller = require("../controllers/payment.controller");
+router.get("/", controller.payment);
+router.get("/add", controller.addPayment);
+router.post("/add", controller.postAddPayment);
+router.get("/:_id", controller.detailPayment);
+router.get("/edit/:_id", controller.editPayment);
+router.post("/edit/:_id", controller.postEditPayment);
+router.post("/delete/:_id", controller.deletePayment);
+module.exports = router;

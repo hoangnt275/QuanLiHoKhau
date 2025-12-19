@@ -3,6 +3,7 @@ extends ../../layout/default.pug
 block main
   .container
     h1 Chỉnh sửa hộ gia đình 
+    a.btn.btn-primary.mt-3.mb-3(href='/family') Quay lại danh sách
     form(method='POST' action=`/family/edit/${family.code}`)
       .form-group
         label(for='code') Mã hộ:
@@ -33,4 +34,4 @@ block main
           option(value='Đã hủy' selected=String(family.status) === 'Đã hủy') Đã hủy
 
       button.btn.btn-primary.mt-4(type='submit') Chỉnh sửa hộ khẩu
-    a.btn.btn-secondary.mt-3(href='/family') Quay lại danh sách
+    

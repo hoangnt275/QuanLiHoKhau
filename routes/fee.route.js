@@ -1,0 +1,12 @@
+const express = require("express");
+const router = express.Router();
+const controller = require("../controllers/fee.controller");
+router.get("/", controller.fee);
+router.get("/add", controller.addFee);
+router.post("/add", controller.postAddFee);
+router.get("/:feeCode", controller.detailFee);
+router.get("/edit/:feeCode", controller.editFee);
+router.post("/edit/:feeCode", controller.postEditFee);
+router.post("/delete/:feeCode", controller.deleteFee);
+router.get("/api/fee/by-code/:code", controller.getFeeByCode);
+module.exports = router;

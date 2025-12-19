@@ -1,0 +1,41 @@
+extends ../../layout/default.pug
+include  ../../mixins/search.pug
+include  ../../mixins/filter-status.pug
+block main
+  .container
+    .card.custom-card
+      .card-header
+        h3 Danh sách đóng phí
+      .card-body
+        .controls.mb-3
+          .left
+            a.btn-new(href='/payment/add') + TẠO LƯỢT ĐÓNG PHÍ MỚI
+            +filter-status(filterStatus)
+          .right
+            //- +search(keyword)
+        .table-scroll
+          table.table-custom
+            thead
+              tr
+                th #
+                th Tên khoản phí
+                th Tên người đóng phí
+                th Ngày đóng phí
+                th Trạng thái
+            tbody
+              each val, index in payments
+                tr
+                  td #{index+1}
+                  td #{val.fee.name}
+                  td #{val.payer.fullName}
+                  td= val.paidDate? val.paidDate.toLocaleDateString("vi-VN") : ""
+                  td
+                    - var cls = val.status=='Đã đóng' ? 'status-approved' : (val.status=='Đóng một phần' ? 'status-blocked' : 'status-rejected')
+                    span.status-dot(class=cls)
+                    | #{val.status}
+                  td
+                    a(href='/payment/' + val._id, title='Xem') 🔍
+                    a.ml-2(href=`/payment/edit/${val._id}`, title='Sửa') ✏️
+                    form.delete-form(method="POST", action=`/payment/delete/${val._id}`)
+                      button.delete-button(type="submit" title='Xóa') 🗑️
+        

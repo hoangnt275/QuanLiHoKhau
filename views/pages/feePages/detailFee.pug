@@ -1,0 +1,42 @@
+extends ../../layout/default.pug
+block main
+  .container
+    .card.custom-card
+      .card-header
+        h3 Chi tiết khoản phí
+      .card-body
+        .details-grid
+          .detail-item
+            strong Mã khoản phí:
+            br
+            | #{fee.codeFee}
+          .detail-item
+            strong Tên khoản phí:
+            br
+            | #{fee.name}
+          .detail-item
+            strong Số tiền:
+            br
+            | #{fee.value}
+          .detail-item
+            strong Chu kỳ:
+            br
+            | #{fee.cycle}
+          .detail-item
+            strong Loại phí:
+            br
+            | #{fee.type}
+          .detail-item
+            strong Tình trạng:
+            br
+            | #{fee.status}
+          .detail-item.paid-families
+            strong Các hộ gia đình đã nộp đủ phí:
+            if fee.paidFamilies && fee.paidFamilies.length > 0
+              ul.members-list
+                each family in fee.paidFamilies
+                  li.member-chip #{family.code} - #{family.head.fullName}
+            else
+              br
+              | Chưa có hộ gia đình nào nộp đủ phí
+        a.btn.btn-secondary.mt-3(href='/fee') Quay lại danh sách

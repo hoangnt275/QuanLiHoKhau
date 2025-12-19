@@ -3,6 +3,7 @@ extends ../../layout/default.pug
 block main
   .container
     h1 Thêm hộ gia đình mới
+    a.btn.btn-primary.mt-3.mb-3(href='/family') Quay lại danh sách
     form(method='POST' action='/family/add')
       .form-group
         label(for='code') Mã hộ:
@@ -49,8 +50,8 @@ block main
       .form-group
         label(for='statusPerson') Trạng thái:
         select#status.form-control(name='statusPerson' required)
-          option(value='Thường trú') Thường trú
-          option(value='Tạm trú') Tạm trú
-          option(value='Tạm vắng') Tạm vắng
+          option(value='Thường trú') Thường trú
+          option(value='Tạm trú') Tạm trú
+          option(value='Tạm vắng') Tạm vắng
 
       button.btn.btn-primary(type='submit') Thêm hộ gia đình

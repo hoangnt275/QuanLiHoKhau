@@ -8,4 +8,5 @@ router.get("/:cccd", controller.detailPerson);
 router.get("/edit/:cccd", controller.editPerson);
 router.post("/edit/:cccd", controller.postEditPerson);
 router.post("/delete/:cccd", controller.deletePerson);
+router.get("/api/payer/by-cccd/:cccd", controller.getPersonByCCCD);
 module.exports = router;

@@ -5,35 +5,45 @@ block main
       .card-header
         h3 Chi tiết nhân khẩu
       .card-body
-        ul.list-unstyled
-          li
-            strong Họ và tên: 
+        .details-grid
+          .detail-item
+            strong Họ và tên:
+            br
             | #{person.fullName}
-          li
-            strong Số CMND/CCCD: 
+          .detail-item
+            strong Số CMND/CCCD:
+            br
             | #{person.cccd}
-          li
-            strong Giới tính: 
-            |  #{person.genderLabel}
-          li
-            strong Ngày sinh: 
+          .detail-item
+            strong Giới tính:
+            br
+            | #{person.genderLabel}
+          .detail-item
+            strong Ngày sinh:
+            br
             | #{person.dateOfBirth ? person.dateOfBirth.toLocaleDateString("vi-VN") : ""}
-          li
-            strong Nghề nghiệp: 
-            | #{person.job} 
-          li
-            strong Quan hệ với chủ hộ: 
+          .detail-item
+            strong Nghề nghiệp:
+            br
+            | #{person.job}
+          .detail-item
+            strong Quan hệ với chủ hộ:
+            br
             | #{person.relationLabel}
-          li
-            strong Mã hộ: 
+          .detail-item
+            strong Mã hộ:
+            br
             | #{person.familyCode ? person.familyCode.code : 'Chưa có thông tin'}
-          li
+          .detail-item
             strong Chủ hộ:
-            | #{person.familyCode ? person.familyCode.headName : 'Chưa có thông tin'}
-          li
-            strong Địa chỉ hộ: 
+            br
+            | #{person.familyCode ? person.familyCode.head.fullName : 'Chưa có thông tin'}
+          .detail-item
+            strong Địa chỉ hộ:
+            br
             | #{person.familyCode ? person.familyCode.address : 'Chưa có thông tin'}
-          li
-            strong Trạng thái: 
-            | #{person.status}  
-          a.btn.btn-secondary.mt-3(href='/person') Quay lại danh sách
+          .detail-item
+            strong Trạng thái:
+            br
+            | #{person.status}
+        a.btn.btn-primary.mt-3(href='/person') Quay lại danh sách

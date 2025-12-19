@@ -1,0 +1,32 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Chỉnh sửa lượt đóng phí
+    form(method='POST' action=`/payment/edit/${payment._id}`)
+
+      .form-group
+        label(for='codeFee') Mã khoản phí:
+        input#codeFee.form-control(type='text' name='codeFee' value=payment.fee.codeFee required)
+      .form-group
+        label Tên khoản phí:
+        input#nameFee.form-control(type='text' value=payment.fee.name readonly)
+      .form-group
+        label Số tiền cần phải đóng:
+        input#valueFee.form-control(type='number' value=payment.fee.value readonly)
+      .form-group
+        label Loại khoản phí
+        input#typeFee.form-control(type='text' value=payment.fee.type readonly)
+      .form-group 
+        label(for='cccdPayer') CCCD người đóng phí:
+        input#cccdPayer.form-control(type='text' name='cccdPayer' value=payment.payer.cccd required)
+      .form-group
+        label Tên người đóng phí:
+        input#namePayer.form-control(type='text' value=payment.payer.fullName readonly)
+      .form-group
+        label(for='paidValue') Số tiền đóng:
+        input#paidvalue.form-control(type='number' name='paidValue' value=payment.paidValue required)
+      .form-group
+        label(for='paidDate') Ngày đóng phí:
+        input#paidDate.form-control(type='date' name='paidDate' value=payment.paidDateInput required)
+      button.btn.btn-primary(type='submit') Chỉnh sửa lượt đóng phí

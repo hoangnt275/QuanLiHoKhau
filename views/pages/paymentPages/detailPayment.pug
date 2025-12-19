@@ -1,0 +1,57 @@
+extends ../../layout/default.pug
+block main
+  .container
+    .card.custom-card
+      .card-header
+        h3 Chi tiết lượt đóng phí
+      .card-body
+        .details-grid
+          .detail-item
+            strong Mã khoản phí:
+            br
+            | #{payment.fee.codeFee}
+          .detail-item
+            strong Tên khoản phí:
+            br
+            | #{payment.fee.name}
+          .detail-item
+            strong Số tiền cần phải đóng:
+            br
+            | #{payment.fee.value}
+          .detail-item
+            strong Loại phí:
+            br
+            | #{payment.fee.type}
+          .detail-item
+            strong CCCD người đóng phí:
+            br
+            | #{payment.payer.cccd}
+          .detail-item
+            strong Tên người đóng phí:
+            br
+            | #{payment.payer.fullName}
+          .detail-item
+            strong Mã hộ:
+            br
+            | #{payment.payer.familyCode.code}
+          .detail-item
+            strong Quan hệ với chủ hộ:
+            br
+            | #{payment.payer.relation}
+          .detail-item
+            strong Số tiền đóng:
+            br
+            | #{payment.paidValue}
+          .detail-item
+            strong Trạng thái:
+            if payment && Number(payment.debitValue) > 0
+              br
+              strong.text-danger Còn nợ #{payment.debitValue} đ
+            else
+              br
+              strong.text-success Đã hoàn thành
+          .detail-item
+            strong Ngày đóng phí:
+            br
+            | #{payment.paidDate.toLocaleDateString("vi-VN")}
+        a.btn.btn-secondary.mt-3(href='/payment') Quay lại danh sách

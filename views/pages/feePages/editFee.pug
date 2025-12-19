@@ -1,0 +1,36 @@
+extends ../../layout/default.pug
+
+block main
+  .container
+    h1 Chỉnh sửa khoản phí  
+    form(method='POST' action=`/fee/edit/${fee.codeFee}`)
+      .form-group
+        label(for='codeFee') Mã khoản phí:
+        input#codeFee.form-control(type='text' name='codeFee' value=fee.codeFee required)
+
+      .form-group
+        label(for='name') Tên khoản phí:
+        input#name.form-control(type='text' name='name' value=fee.name required)
+
+      .form-group
+        label(for='value') Số tiền:
+        input#value.form-control(type='text' name='value' value=fee.value required)
+
+      .form-group
+        label(for='cycle') Chu kỳ:
+        input#cycle.form-control(type='text' name='cycle' value=fee.cycle required)
+
+      .form-group
+        label(for='type') Loại phí:
+        select#type.form-control(name='type' value=fee.type required)
+          option(value='Bắt buộc' selected=(fee.type === 'Bắt buộc')) Bắt buộc
+          option(value='Tự nguyện' selected=(fee.type === 'Tự nguyện')) Tự nguyện
+      .form-group
+        label(for='status') Trạng thái:
+        select#status.form-control(name='status' value=fee.status required)
+          option(value='Hoàn thành' selected=(fee.status === 'Hoàn thành')) Hoàn thành
+          option(value='Đang thu' selected=(fee.status === 'Đang thu')) Đang thu
+          option(value='Đã hủy' selected=(fee.status === 'Đã hủy')) Đã hủy
+
+      button.btn.btn-primary.mt-4(type='submit') Chỉnh sửa khoản phí
+    a.btn.btn-secondary.p-3.btn-sm(href='/fee') Quay lại danh sách
